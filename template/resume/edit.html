@@ -1,0 +1,27 @@
+<? include TEMPLATE_PATH."public/header.html" ?> 
+  <div class="container">
+    
+    <form action="<?=URL_PATH?>/index.php?co=Resume&ao=update" method="post">
+      <div class="form-group">
+        <label for="">简历名称：</label>
+        <input type="text"  class="form-control" value="<?=$info_arr['resume_name']?>"  name="resume_name" required></div>
+      <div class="form-group">
+        当时月薪：
+        <input type="text" class="form-control" value="<?=$info_arr['Monthly_salary']?>" name="Monthly_salary" required></div>
+      <div class="form-group">
+        工作描述：
+        <textarea class="form-control"   name="Description" id="" cols="30" rows="10"><?=$info_arr['Description']?></textarea>
+      </div>
+      <div class="form-group">
+
+        <input type="submit" class="btn btn-success" value="修改简历">
+        <!-- 这个是编辑的条件 -->
+        <input type="hidden" name="id" value="<?=$id?>">
+        
+        <a  href="javascript:history.go(-1);" class="btn">返回</a>
+
+
+        </div>
+    </form>
+  </div>
+  <? include TEMPLATE_PATH."public/footer.html" ?> 

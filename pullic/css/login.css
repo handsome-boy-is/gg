@@ -1,0 +1,94 @@
+/* CSS Document */
+
+	*{
+		margin:0 auto;
+		padding:0;	
+		font-size:12px;
+		
+		}
+	body{
+		background-image:url(../image/%E4%B8%8B%E8%BD%BD.jpg);
+		}
+	.box{
+		padding-top:8%;
+		padding-right:8%;}		
+	.dl_box,
+	.zc_box{
+		width:33.3rem;
+		margin-right:0;
+		background:rgba(0, 0, 0, 0.52);
+		border-radius:0.25rem;
+		text-align:center;
+		color:#000	;
+		padding:0.833rem 0;
+		}
+	.zc_box{
+		display:none
+		}	
+     .admin_tip,
+	 .pwd_tip,
+	 .again_pwd_tip,
+	 .phone_tip,
+	 .Verification_tip{
+		color:#75ea50;	
+		width: 49%;
+		height:2.5rem;
+		line-height:2.5rem;
+		margin-right: 8%;
+			}
+ 	input[name="admin"],
+	input[name="pwd"],
+	input[name="again_pwd"],
+	input[name="phone"],
+	input[name="Verification"],
+	.new_pwd,
+	.new_admin{
+		display:block;
+		padding:0.25rem 0.83rem;
+		width:80%;
+		height:3rem;
+		    margin: 0 auto;
+		border-radius: 0.42rem;
+		
+			}
+	input[name="Verification"]{
+		width:40%;
+		display: inline-block;
+		margin-left:-30%;
+		margin-right:10%
+		}		
+	.Verification_img{
+		position:absolute;
+		}		
+	input[type="checkbox"]{
+			
+    	margin-right: -73%;
+			    
+			}	
+	
+	input[type="submit"]{
+		display: inline-block;
+		width: 38%;
+		/*margin-top: 30px;*/
+		margin-bottom: 8%;
+		padding: 0.83rem 0.25rem;
+		background: #2196F3;
+		border: 0;
+		color: #fff;
+		font-size: 14px;
+		border-radius: 0.42rem;	   		
+			
+		}
+		input[type="submit"]:hover{
+			
+			background:#03a9f4;
+			}
+	  input[type="submit"]+input[type="submit"]{
+				
+		margin-left:5%
+		}	
+		
+	 h2{
+		font-size: 24px;
+    	padding: 2rem;
+			}

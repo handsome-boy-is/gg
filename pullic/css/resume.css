@@ -1,0 +1,27 @@
+.thead{
+
+	border-bottom:1px solid #000;
+	}
+.thead-box{
+	height:50px;	
+	line-height:50px
+	}	
+.tbody{
+	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;			
+	}
+.tbody-box{
+	
+	height:3rem;
+	line-height:3rem
+	}		
+
+.tbody-box >div:last-child{
+	
+	text-align:center
+	}
+body{
+	
+	}	

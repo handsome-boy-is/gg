@@ -1,0 +1,73 @@
+<? include TEMPLATE_PATH."public/header.html" ?> 
+
+	<div class="nav">
+    <!-------------------------------------nav(being)-------------------------------------------------->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brand</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+                <li><a href="index.php?co=Jobseekers&ao=add">添加个人信息</a></li>
+                <li class="divider"></li>
+                <li><a href="index.php?co=Resume">查看简历模版</a></li>
+                <li><a href="index.php?co=Resume&ao=add">添加简历模版</a></li>
+                
+            </li>
+          </ul>
+          <form action="<?=URL_PATH?>/index.php?co=Jobseekers" method="post" class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" name="keywords"  class="form-control" placeholder="请输入岗位关键词">
+            </div>
+            <button type="submit" class="btn btn-default">search</button>
+          </form>
+           <ul class="nav navbar-nav navbar-right">
+         	 <li><a href="<?=URL_PATH?>/index.php?ao=logout">退出</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    
+    <!-------------------------------------nav(end)-------------------------------------------------->
+    </div>
+  <div class="container">
+    
+    <form action="<?=URL_PATH?>/index.php?co=jobseekers&ao=save" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="">求职者名字：</label>
+        <input type="text"  class="form-control"  name="UserName" required>
+        </div>
+      <div class="form-group">
+        电话：
+        <input type="tel" class="form-control"  name="Phone" required>
+        </div>
+      <div class="form-group">
+        目前住址：
+        <input type="text" class="form-control"  name="address" required>
+      </div>
+      <div class="form-group">
+        个人照片：
+        <input type="file" class="form-control"  name="Photo" required>
+      </div>
+      <div class="form-group">
+
+        <input type="submit" class="btn btn-success" value="添加资料">
+      
+        
+        <a  href="javascript:history.go(-1);" class="btn">返回</a>
+
+
+        </div>
+    </form>
+  </div>
+<? include TEMPLATE_PATH."public/footer.html" ?> 

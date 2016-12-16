@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <title><?=$title?></title>
+
+  <!-- 引用jQuery -->
+    <script type="text/javascript" src="<?=URL_PATH?>/pullic/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="<?=URL_PATH?>/pullic/bootstrap-3.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<?=URL_PATH?>/pullic/bootstrap-3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?=URL_PATH?>/pullic/css/base.css">
+	<link rel="stylesheet" href="<?=URL_PATH?>/pullic/css/login.css">   
+    
+</head>	
+<body>
+
+<body>
+<!--登录表单-->
+<div class="box">
+    <div class="dl_box">
+        <h2>登录</h2>
+        <input type="text" name="admin" placeholder="帐号" />
+         <div class="admin_tip"></div>
+         
+        <input type="password" name="pwd" placeholder="密码" />
+         <div class="pwd_tip"></div>
+          <input type="text" name="Verification" placeholder="" class="Verification"/>
+          <img src="libraries/verification.php" class="Verification_img" >
+          <div class="Verification_tip"></div>
+        <div>
+            <input type="submit" value="登陆"  class="login"/>
+            <input type="submit" value="注册"  class="register"/>
+            
+        </div>
+        <div>
+             	<input type="hidden" name="co" value="login">
+        	<input type="hidden" name="ao" value="do_login">
+         </div>
+        记住我<input type="checkbox" name="checkbox"/>
+    </div>   
+
+ <!--注册表单-->
+     <div class="zc_box">
+     	
+             <h2>注册</h2>
+            <input type="text" name="new_admin" placeholder="帐号" class="new_admin"/>
+             <div class="admin_tip "></div>
+             
+            <input type="password" name="new_pwd" placeholder="密码" class="new_pwd" />
+            <div class="pwd_tip tip"></div>
+            
+            <input type="password" name="again_pwd" placeholder="再输入一次密码" class="again_pwd" />
+            <div class="again_pwd_tip tip"></div>
+            
+            <input type="tel" name="phone" placeholder="手机号码" class="phone"/>
+             <div class="phone_tip tip"></div>
+             
+             <input type="text" name="Verification" placeholder="" class="Verification"/>
+         	 <img src="libraries/verification.php" class="Verification_img"  >
+             <div class="Verification_tip "></div>
+             <!-- 下面这个部分 -->
+        	
+             <div class="sub">
+            
+               		<input type="submit" value="已注册"   class="login"/>
+             	   <input type="submit" value="注册"   class="register"/>
+          		
+            </div>
+        	
+      
+    </div> 
+</div>
+
+ <script>
+ 
+	$(document).ready(function() {;
+		$zc_login = $(".zc_box .login");
+		$zc_box = $(".zc_box ");
+		$zc_admin = $(".zc_box  .new_admin");
+		$zc_pwd = $(".zc_box  .new_pwd");
+		$zc_again_pwd = $(".zc_box  .again_pwd");
+		$zc_phone = $(".zc_box  .phone");
+
+		
+		
+		$dl_box=$(".dl_box ");
+		$dl_register=$(".dl_box .register");
+		
+		
+		 //判断字符串中是否含有汉字的正则表达
+		$r = /^\d+$/
+	//--------------------登录、注册页面切换-------------------------------
+		 $zc_login.on("click",function(){
+			 $zc_box.css({display:"none"});
+			  $dl_box.css({display:"block"});
+			  $(".zc_box .sub").siblings("input").attr("value","");
+			});
+		 $dl_register.on("click",function(){
+			 $zc_box.css({display:"block"});
+			 $dl_box.css({display:"none"});
+			 $(".dl_box .sub").siblings("input").attr("value","");
+			});
+		
+		
+		
+	//--------------------注册帐号------------------------------------------
+		$zc_admin.on("blur",function(){
+			
+			if($zc_admin.val() == ""){
+				$(".zc_box  .admin_tip").html("帐号不能为空");
+				
+				}
+			else if($zc_admin.val().length > 7 ){
+				$(".zc_box  .admin_tip").html("帐号要在7位数以内");
+		
+				}	
+			else{
+				
+				//注册检验帐号是否存在
+				var $new_admin=$(".zc_box input[name='new_admin']").val();
+				var register_datas={new_admin:$new_admin};
+					
+				jQuery.post('controller/register.php',register_datas,function (res){
+							
+								$(".zc_box  .admin_tip").html(res.info);
+							
+							},'json');	
+				
+				
+				
+				}	
+			});
+			
+			
+			
+	//--------------------注册密码------------------------------------
+		$zc_pwd.on("blur",function(){
+			
+			if($zc_pwd.val() == ""){
+				$(".zc_box  .pwd_tip").html("注册密码不能为空");
+				}
+				
+			else{
+					if($zc_pwd.val().length < 6){
+						$(".zc_box  .pwd_tip").html("不能少于6位数");	
+						}
+						
+					else{					
+						$(".zc_box  .pwd_tip").html("ok");	
+						}	
+				}	
+			});
+			
+			
+			
+			
+	//---------------------------两次输入的注册密码是否一致------------------------------------------
+		 $zc_again_pwd.on("blur",function(){
+		
+			 if($zc_pwd.val() != $zc_again_pwd.val()){
+				$(".zc_box  .again_pwd_tip").html("两个密码不一致")
+				}	
+				
+			else{
+				$(".zc_box  .again_pwd_tip").html("ok")
+				}
+		 });	
+		 
+		 
+	//	------------------------- 手机号码-------------------------
+	
+		 $zc_phone.on("blur",function(){
+			 
+			
+			if($zc_phone.val() == ""){	
+				$(".zc_box  .phone_tip").html("手机号码不能为空");
+				}
+			else if( !$r.test($zc_phone.val())){
+				$(".zc_box  .phone_tip").html("需填纯数字");
+				}	
+			 else if($zc_phone.val().length !=11){
+				$(".zc_box  .phone_tip").html("必须是11位数")
+				}	
+			else if($zc_phone.val().substring(0,1) != 1 || $zc_phone.val().substring(1,2) != 3 && $zc_phone.val().substring(1,2)!=5){
+				$(".zc_box  .phone_tip").html("必须是数字1为开头，第二位为3、5")
+				}	
+			else{
+				$(".zc_box  .phone_tip").html("ok")
+				}
+			 
+			 });
+		
+		
+	// -------------------------点击换验证码-------------------------
+		 $(".Verification_img").on("click",function() {
+			 $(this).attr("src","libraries/verification.php?"+Math.random());
+			 });
+		
+			 
+	//-------------------------判断是否输入验证码-------------------------
+			 $(".zc_box .Verification").on("blur",function() {
+			
+				 if($(".zc_box .Verification").val() ==""){
+					 $(".zc_box .Verification_tip").html("验证码不能为空")
+					 }
+				else{
+					 $(".zc_box .Verification_tip").html("")
+					}	 
+				 });
+		
+			 
+		 
+	//-------------------------注册事件-------------------------
+		 $(".zc_box .register").on("click",function(){
+			 	for($j =0 ; $j < $(".zc_box .tip").length ;$j++ ){
+					if($(".zc_box .tip").eq( $j ).html()=='ok') {
+						var $tip=1;
+					}
+					else{
+						var $tip=0;
+						}
+				}
+				
+				var $new_admin=$(".zc_box input[name='new_admin']").val();
+				var $new_pwd=$(".zc_box input[name='again_pwd']").val();
+				var $phone=$(".zc_box input[name='phone']").val();
+				var $Verifications=$(".zc_box input[name='Verification']").val();
+				var register_data={new_admin:$new_admin,new_pwd:$new_pwd,phone:$phone,tip:$tip,Verification:$Verifications};
+						
+				jQuery.post('controller/register.php',register_data,function (res){
+							console.log(res);
+								if(res.code =='ok'){
+									alert(res.msg);
+									$(".zc_box .sub").siblings("input").attr("value","");//除了按钮以外的input标签都清空内容，切换到登录模块
+									$(".zc_box .admin_tip").html("");
+									$(".zc_box .pwd_tip").html("");
+									$(".zc_box .again_pwd_tip").html("");
+									$(".zc_box .phone_tip").html("");
+									$(".zc_box .Verification_tip").html("");
+									$zc_box.css({display:"none"});
+			 						$dl_box.css({display:"block"});
+									
+									
+									}
+								else{	
+										//注册失败，验证码跟换
+									$(".Verification_img").attr("src","libraries/verification.php?"+Math.random());
+									$(".zc_box  .admin_tip").html(res.info);
+									$(".zc_box .new_pwd").attr("value","");
+									$(".zc_box .again_pwd").attr("value","");
+									$(".zc_box .Verification").attr("value","");
+									$(".zc_box .Verification_tip").html(res.code);
+								}
+							
+							},'json');	
+						
+			
+	 		});
+		
+		 
+		 
+	 //-------------------------登录事件--------------------------------------------------
+		$(".dl_box .login").on("click",function(){
+				var $admin=$(".dl_box input[name='admin']").val();
+				var $pwd=$(".dl_box input[name='pwd']").val();
+				var $checkbox=$(".dl_box input[name='checkbox']").attr('checked');//判断复选框有没被选中
+				var $Verification=$(".dl_box input[name='Verification']").val();
+				var $ao=$(".dl_box input[name='ao']").val();
+				var $co=$(".dl_box input[name='co']").val();
+				
+				var login_data={admin:$admin,pwd:$pwd,checkbox:$checkbox,Verification:$Verification,co:$co,ao:$ao};					
+					
+					jQuery.post('index.php?ao=do_login',login_data,function (return_data){
+				console.log(return_data);
+		
+						if(return_data.status)
+						{
+							console.log("成功了");
+							$(".dl_box .admin_tip").text(return_data.msg);
+							$(".Verification_tip").text(return_data.code);
+							document.location.reload();
+						}
+						else{
+							console.log("帐号或密码错误了");
+							$(".dl_box .admin_tip").text(return_data.msg);
+							$(".dl_box .Verification_tip").text(return_data.code);
+							//注册失败，验证码跟换
+	
+							$(".dl_box .Verification").attr("value","");
+							$(".dl_box .Verification_img").attr("src","libraries/verification.php?"+Math.random());
+						}
+						
+					},'json');
+			
+			 })
+	 
+	 }); 
+</script>
+
+</body>
+</html>

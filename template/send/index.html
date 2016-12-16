@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<title>投递信息列表</title>
+
+     
+    
+    <!-- 引用jQuery -->
+  <script type="text/javascript" src="<?=URL_PATH?>/pullic/js/jquery-3.1.1.min.js"></script>
+
+  <link rel="stylesheet" href="<?=URL_PATH?>/public/bootstrap-3.3.0/css/bootstrap.min.css"></head>
+ 
+
+    <style>
+      *{padding: 0;margin: 0;list-style: none;}
+      
+      .info_box li{clear: both; display: block; height: auto; overflow: hidden; border: 1px solid #ccc; margin: 10px; padding: 10px; width: 92%;}
+     .info_box h3{font-size: 28px}   
+  .tip_box{text-align: center;padding-top: 10px;color: #ccc;}
+    .loading_box{display: none;margin: 0 auto;background-color: #f58384;width: 28px;height: 28px;border-radius: 50px;position: relative;transition:top 2s;top:0px;}
+
+    .small_cirle{width: 10px;height: 10px; border: 3px solid #f58384;border-radius: 40px;position: absolute; top: 5px;border-left-color: #fff; transform: rotate(0); /*transition:all 2s;*/ animation:cirle_loading 800ms linear infinite; left: 6px;}
+
+/*.small_cirle:hover{
+transform: rotate(360deg);
+}*/
+
+    @keyframes cirle_loading{
+        0%{
+            transform:rotate(0deg);
+        }
+        50%{
+            transform:rotate(180deg);
+        }
+        100%{
+           transform:rotate(360deg);
+        }
+    }
+    </style>
+</head>
+
+<body>
+<div class="tip_box"></div>
+<div class="loading_box">
+  
+  <div class="small_cirle"></div>
+</div>
+<ul class="info_box">
+
+</ul>
+   
+ 
+<!-- 一进入该页面，读取最新的今日头条新闻列表。
+
+
+鼠标滚动到浏览器底部30px的时候，
+$(document).height()??
+$(window).height()??
+
+再一次ajax调用新的信息，持续加载3次 -->
+
+
+   <script type="text/javascript">
+
+
+var scroll_height;
+var window_height;
+var scroll_count=0;
+
+  // jquery的第四种ajax请求的方法
+    //ajax 需要传一个对象参数
+function get_by_ajax (show_html_type) {
+   
+     $.ajax(
+        {
+          url:'index.php?co=Send&ao=show_list_ajax',
+          data:{"scroll_count":scroll_count},
+          type:'post',
+          dataType:'json',//
+          success:function  (return_str) {
+              
+             var info_box_html='';
+
+             if (return_str==null) {
+                 $('.tip_box').html('职位加载完毕了！');
+                return;
+             }
+             $(return_str).each(function  (i) {
+                   
+                    info_box_html+="<li> <h3><a href='index.php?co=Send&ao=show_resume&id="+return_str[i]['id']+"'> "+return_str[i]['resume_name']+"</a></h3><p>"+return_str[i]['Job_title']+"</p> </li>";
+                 
+               
+             })
+
+             if (show_html_type=='down_touch') {
+
+                  $(".info_box").prepend(info_box_html);
+             }else{
+               $(".info_box").append(info_box_html);
+             }
+           
+             scroll_count++;
+
+             scroll_height=$(document).height();
+             // console.log(scroll_height);
+             window_height=$(window).height();
+
+          }
+        }
+      )
+}
+   
+   get_by_ajax("");
+    
+
+
+     $(window).scroll(function  (event) {
+        // console.log((scroll_height-window_height) -   $(document).scrollTop());
+        if ( (scroll_height-window_height) -   $(document).scrollTop()  ==0   ) {
+           get_by_ajax();
+           //到了离底部30px左右，怎么实现只加载一次？
+        }else{
+
+        }
+       
+     })
+
+
+ 
+      
+      var start_y;
+      var move_y;
+      $(".info_box").on("touchstart",function  (evnt) {
+         $('.loading_box').fadeIn();
+            start_y=evnt.originalEvent.touches[0].clientY;
+      })
+
+      $(".info_box").on("touchmove",function  (evnt) {
+            move_y=evnt.originalEvent.touches[0].clientY;
+             var top_v=move_y-start_y;
+             if(top_v<0){
+                top_v=-top_v;
+             }
+            $('.loading_box').css("top",top_v);
+      })
+
+       $(".info_box").on("touchend",function  (evnt) {
+             // console.log("开始的y轴"+start_y+"移动的y轴"+move_y);
+            $('.loading_box').css("top",0);
+             $('.loading_box').fadeOut(6000);
+
+             if(move_y-start_y>0){
+                 get_by_ajax("down_touch");
+                console.log("往下拉！");
+             }
+      })
+
+
+
+   </script>
+   
+  
+</body>
+</html>

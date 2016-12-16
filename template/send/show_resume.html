@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <title><?=$jobseekers_info['jobseekers_name']?>的<?=$info['resume_name']?></title>
+  <meta name="keywrods" content="<?=$info['resume_name']?>">
+  <meta name="description" content="<?=$info['Job_title']?>">
+  <!-- 引用jQuery -->
+  <script type="text/javascript" src="<?=URL_PATH?>/pullic/js/jquery-3.1.1.min.js"></script>
+
+  <link rel="stylesheet" href="<?=URL_PATH?>/public/bootstrap-3.3.0/css/bootstrap.min.css"></head>
+
+  <style type="text/css">.row{margin: 0;}</style>
+<body>
+<div class="container">
+  <h3>
+    <?=$info['resume_name']?></h3>
+
+  <h5>
+    求职者名字：
+    <?=$jobseekers_info['UserName']?></h5>
+  <div class="row">
+    <h2>职位名称</h2>
+    <section>
+      <?=$info['Job_title']?></section>
+  </div>
+  </div>
+</body>
+</html>

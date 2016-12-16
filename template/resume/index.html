@@ -1,0 +1,120 @@
+{ include "public/header.html" } 
+
+
+<!---------------------------nav(begin)------------------------------------------------>
+ <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brand</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+                <li><a href="index.php?co=Jobseekers">个人管理</a></li>
+                <li class="divider"></li>
+                <li><a href="index.php?co=Resume&ao=add">添加简历模版</a></li>
+           
+          </ul>
+          <form action="<?=URL_PATH?>/index.php?co=Resume" method="post" class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" name="keywords"  class="form-control" placeholder="请输入岗位关键词">
+            </div>
+            <button type="submit" class="btn btn-info">search</button>
+          </form>
+           <ul class="nav navbar-nav navbar-right">
+         	 <li><a href="<?=URL_PATH?>/index.php?ao=logout">退出</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+<!--------------------------nav(end)------------------------------------------------------------------->
+   <div class="container">
+
+
+
+    <div class="row mb10">
+      <div class="col-md-6">排序：<a href="<?=URL_PATH?>/index.php?co=Resume">默认</a> | <a href="<?=URL_PATH?>/index.php?co=Resume&sort=time">时间升序</a>  | <a href="<?=URL_PATH?>/index.php?co=Resume&sort=desc">倒序</a></div>
+      <h1>简历中心</h1>
+    </div>
+        <table class="table">
+       
+           <div class="thead-box">
+            	<div class="thead col-xs-3 col-md-1">序号</div>
+                <div class="thead col-xs-9 col-md-2">简历名称</div>
+                <div class="thead  hidden-xs col-md-2">当时月薪</div>
+                <div class="thead 	hidden-xs col-md-2">工作描述</div>
+                <div class="thead  hidden-xs col-md-3">发布时间</div>
+                <div class="thead  hidden-xs col-md-2">  .....</div>
+                
+            </div>   
+       
+          {foreach $resume_list as $value}
+           <div  class='tbody-box'>
+                 	 <div class=' col-xs-3  col-md-1'>1</div>
+                    <div class='tbody col-xs-5 col-md-2'>{$value['resume_name']}</div>
+                    <div class='  hidden-xs col-md-2'>{$value['Monthly_salary']}</div>
+                    <div class='  hidden-xs col-md-2'>{$value['Description']}</div>
+                    <div class='  hidden-xs col-md-3'>{$value['add_time']|date_format:'Y-m-d H:i'}</div>
+                     <div class=' col-xs-4 col-md-2' >  <a href='".URL_PATH."/index.php?co=Resume&ao=edit&id=".$value['resume_id']."' >修改</a> &nbsp;&nbsp;<a onclick=confim_do('".URL_PATH."/index.php?co=resume&ao=delete&id=".$value['resume_id']."') class='text-danger ' >删除</a></div>
+        			
+                    </div>
+                    
+           {foreachelse} 
+           	<div  class='tbody-box'>
+           对不起，数据库中没有新闻输出!
+            </div>
+     
+                    
+          {/foreach}
+          
+         <!-- <? 
+    		
+            
+            foreach ($resume_list as $key => $value) {
+               echo "
+                  <div  class='tbody-box'>
+                 	 <div class=' col-xs-3  col-md-1'>1</div>
+                    <div class='tbody col-xs-5 col-md-2'>".$value['resume_name']."</div>
+                    <div class='  hidden-xs col-md-2'>".$value['Monthly_salary']."</div>
+                    <div class='  hidden-xs col-md-2'>".$value['Description']."</div>
+                    <div class='  hidden-xs col-md-3'>".date('Y-m-d H:i:s',$value['add_time'])."</div>
+                     <div class=' col-xs-4 col-md-2' >  <a href='".URL_PATH."/index.php?co=Resume&ao=edit&id=".$value['resume_id']."' >修改</a> &nbsp;&nbsp;<a onclick=confim_do('".URL_PATH."/index.php?co=resume&ao=delete&id=".$value['resume_id']."') class='text-danger ' >删除</a></div>
+        			
+                    </div>
+                    
+                    
+                 ";
+            }
+          ?>-->
+         
+        </table>
+  
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+        分页：4/8
+          <a href="<?=URL_PATH?>/index.php?co=Resume&p=1">第一页</a>
+          <a href="<?=URL_PATH?>/index.php?co=Resume&p=2">第二页</a>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+      <script>
+      function confim_do (href_url) {
+        if (window.confirm("确认删除这条信息吗？")) {
+            location.href=href_url;
+        }else{
+          
+
+        }
+      }
+  </script>
+  { include "public/footer.html" } 
